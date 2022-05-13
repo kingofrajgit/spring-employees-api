@@ -1,6 +1,7 @@
 package com.employees.employees.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import com.employees.employees.model.Emplogin;
@@ -8,7 +9,7 @@ import com.employees.employees.repository.EmplogRepositry;
 import com.employees.employees.validation.emplogValidation;
 
 
-
+@Configuration
 @Service
 public class emplogService {
 	@Autowired
@@ -20,7 +21,6 @@ public class emplogService {
 		try {
 			user = emplogrepositry.findByempEmail(email);
 			if(user == null) {
-				System.out.println("Unregistered Employee");
 				throw new Exception("Not a Registered Employee");
 			}
 			else if(user.getEmpPassword().equals(password)) {

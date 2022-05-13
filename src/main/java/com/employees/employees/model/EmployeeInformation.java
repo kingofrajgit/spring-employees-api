@@ -22,8 +22,6 @@ import lombok.ToString;
 public class EmployeeInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //AutoIncrement
-	@Column(name="details_id")
-	private Integer detailsId;
 	@Column(name="emp_id")
 	private Integer empId;
 	@Column(name="emp_name")
