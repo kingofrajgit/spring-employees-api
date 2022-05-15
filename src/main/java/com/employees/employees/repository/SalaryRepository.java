@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.employees.employees.model.Salary;
 
 @Repository
-public interface SalaryRepository extends JpaRepository<Salary,Integer> {
+public interface SalaryRepository extends JpaRepository<Salary, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("update Salary s set s.salary=:salary,s.salaryStatus=:status where s.empId=:empId" )
-	void update(@Param("empId")Integer empId,@Param("salary") Integer salary,@Param("status") String status);
+	@Query("update Salary s set s.salary=:salary,s.salaryStatus=:status where s.empId=:empId")
+	void update(@Param("empId") Integer empId, @Param("salary") Integer salary, @Param("status") String status);
 
 }

@@ -12,24 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.employees.employees.model.EmployeeInformation;
 
-
-
-
 @Repository
-public interface EmpInfoRepositry extends JpaRepository<EmployeeInformation,Integer> {
-	
+public interface EmpInfoRepositry extends JpaRepository<EmployeeInformation, Integer> {
+
 	@Transactional
 	@Modifying
 	@Query("update EmployeeInformation e set  e.status=:status where e.empId=:id")
-	void docmentVrificationUpdate(@Param("id")Integer id,@Param("status") String status);
-	
+	void docmentVrificationUpdate(@Param("id") Integer id, @Param("status") String status);
 
 	@Query("select e from EmployeeInformation e where e.status=:status")
-	List<EmployeeInformation> findbyStatus(String status)throws SQLException;
+	List<EmployeeInformation> findbyStatus(String status) throws SQLException;
 
-	
-
-	
-
-	
 }

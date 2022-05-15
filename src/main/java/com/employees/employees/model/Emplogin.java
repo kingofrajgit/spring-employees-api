@@ -16,12 +16,9 @@ import lombok.ToString;
 @Table(name = "emp_deatils")
 public class Emplogin {
 	@Id
-<<<<<<< HEAD
-	@Column(name = "emp_id")
-=======
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="emp_id")
->>>>>>> d92e99e63272d2963975d9e9c49ce50e82bfab37
+	@Column(name = "emp_id")
+
 	private Integer empId;
 	@Column(name = "emp_name")
 	private String empName;

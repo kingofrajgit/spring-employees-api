@@ -13,6 +13,7 @@ import com.employees.employees.repository.EmpInfoRepositry;
 import com.employees.employees.validation.EmpDocumentValidation;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 public class empDocumentValidationService {
@@ -25,14 +26,13 @@ public class empDocumentValidationService {
 
 	public List<EmployeeInformation> getAllEmployeesDetails() throws ValidatorException {
 		List<EmployeeInformation> list = null;
-		try {			
-			
+		try {
+
 			list = empinforepositry.findAll();
 			if (list.isEmpty()) {
 				log.error("no records fount in employees details");
 				throw new ValidatorException("no records fount in employees details");
-			}
-			else {
+			} else {
 				validator.validateDocuments(list);
 			}
 		} catch (DataAccessException e) {
@@ -44,9 +44,9 @@ public class empDocumentValidationService {
 	public String docmentVrificationUpdate(Integer id, String status) throws ValidatorException {
 		String list = null;
 		try {
-			validator.validate(id,status);
-			 empinforepositry.docmentVrificationUpdate(id, status);
-			 list = "success";
+			validator.validate(id, status);
+			empinforepositry.docmentVrificationUpdate(id, status);
+			list = "success";
 		} catch (DataAccessException e) {
 			throw new ValidatorException(e.getMessage());
 		}
@@ -55,8 +55,8 @@ public class empDocumentValidationService {
 
 	public List<EmployeeInformation> getAllEmployeesDetails(String status) throws ValidatorException, SQLException {
 		List<EmployeeInformation> list = null;
-		try {			
-			
+		try {
+
 			list = empinforepositry.findbyStatus(status);
 			if (list.isEmpty()) {
 				log.error("no records fount in employees details");
