@@ -2,8 +2,10 @@ package com.employees.employees.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.Emplogin;
 import com.employees.employees.repository.EmplogRepositry;
 import com.employees.employees.validation.emplogValidation;
@@ -37,4 +39,18 @@ public class emplogService {
 		}
 }
 	
+<<<<<<< HEAD
+=======
+	public String passwordupdate(Integer id, String password) throws Exception {
+		String list = null;
+		try {
+			emplogValidation.passwordcheck(id,password);
+			emplogrepositry.updatepassword(id, password);
+			 list = "successfully updated";
+		} catch (DataAccessException e) {
+			throw new ValidatorException(e.getMessage());
+		}
+		return list;
+	}
+>>>>>>> d92e99e63272d2963975d9e9c49ce50e82bfab37
 }
