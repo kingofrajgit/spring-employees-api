@@ -53,7 +53,14 @@ public class VerificationControll {
 			MessageDTO message = new MessageDTO(e.getMessage());
 			return new ResponseEntity<>(message, HttpStatus.OK);
 		}
-	}
+	} 
+	
+	/**
+	 * this method used  to get all verified status data
+	 * @param status
+	 * @return
+	 * @throws SQLException
+	 */
 
 	@GetMapping("employees/document/getAllDocumentsByVerifiedStaus")
 	public ResponseEntity<?> getAllDocumentsByVerifiedStaus(@RequestParam("status") String status) throws SQLException {

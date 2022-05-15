@@ -36,4 +36,5 @@ public class emplogService {
 			throw new Exception(e.getMessage());
 		}
 }
+	
 }

@@ -19,7 +19,6 @@ public class SalaryService {
 
 	public void save(Salary salary) throws ValidationException {
 		try {
-			//SalaryValidation.validate(salary);
 			salaryRepository.save(salary);
 		} catch (DataAccessException e) {
 			throw new ValidationException(e.getMessage());
