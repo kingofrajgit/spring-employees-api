@@ -12,4 +12,16 @@ public class emplogValidation {
 		}
 
 }
+	public static void passwordcheck(Integer id,String password) throws Exception{
+		if(id<0)
+		{
+			throw new Exception("Enter a Valid Id");
+		}
+		
+		if(password.length()>16)
+		{
+			throw new Exception("Enter a Valid password");
+		}
+		
+	}
 }
