@@ -48,22 +48,27 @@ public class EmpDocumentValidation {
 			throw new ValidatorException("id then can be less then zero");
 		}
 	}
-
+	
+	/**
+	 * this method is used to validate all fields and get error or success message
+	 * @param list
+	 * @return
+	 * @throws ValidatorException
+	 */
 	public List<ValidateResultDTO> validateDocuments(List<EmployeeInformation> list) throws ValidatorException {
 		List<ValidateResultDTO> listDto = new ArrayList<>();
 		ValidateResultDTO resultDto = null;
 		for (EmployeeInformation details : list) {
 			 resultDto = new ValidateResultDTO();
-			this.valiodateId(details.getEmpId(), resultDto);
+			this.validateId(details.getEmpId(), resultDto);
 			this.validateEmpEmail(details.getEmpEmail(), resultDto);
-			this.valiodateAadhar(details.getAadhar(), resultDto);
-			this.valiodateAccountNo(details.getAccountNo(), resultDto);
-			this.valiodateEmpName(details.getEmpName(), resultDto);
-			this.valiodateIfscCode(details.getIfscCode(), resultDto);
-			this.valiodateMobileNumber(details.getMobileNumber(), resultDto);
-			this.valiodatePannum(details.getPannum(), resultDto);
-			System.out.println(details.getPannum());
-			this.valiodateRole(details.getRole(), resultDto);
+			this.validateAadhar(details.getAadhar(), resultDto);
+			this.validateAccountNo(details.getAccountNo(), resultDto);
+			this.validateEmpName(details.getEmpName(), resultDto);
+			this.validateIfscCode(details.getIfscCode(), resultDto);
+			this.validateMobileNumber(details.getMobileNumber(), resultDto);
+			this.validatePannum(details.getPannum(), resultDto);
+			this.validateRole(details.getRole(), resultDto);
 			listDto.add(resultDto);
 		}
 		return listDto;
@@ -92,7 +97,7 @@ public class EmpDocumentValidation {
 	 * @param resultDto
 	 * @throws ValidatorException
 	 */
-	private void valiodateId(Integer id, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validateId(Integer id, ValidateResultDTO resultDto) throws ValidatorException {
 		if (id <= 0) {
 			log.error("incomminig id is less the zero");
 			throw new ValidatorException("id then can be less then zero");
@@ -100,12 +105,12 @@ public class EmpDocumentValidation {
 		
 	}
 
-	private void valiodateRole(String role, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validateRole(String role, ValidateResultDTO resultDto) throws ValidatorException {
 		if ("".equals(role.trim()) || role.isEmpty()) {
 			log.error("input status is empty");
 			resultDto.setRoleResult("input status is empty");
 		} else {
-			resultDto.setAadharResult(this.result);
+			resultDto.setRoleResult(this.result);
 		}
 
 	}
@@ -117,7 +122,7 @@ public class EmpDocumentValidation {
 	 * @param resultDto
 	 * @throws ValidatorException
 	 */
-	private void valiodatePannum(String pannum, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validatePannum(String pannum, ValidateResultDTO resultDto) throws ValidatorException {
 		System.out.println("enter");
 		String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
 		if (pannum.matches(regex)) {
@@ -129,18 +134,18 @@ public class EmpDocumentValidation {
 
 	}
 
-	private void valiodateMobileNumber(String mobileNumber, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validateMobileNumber(String mobileNumber, ValidateResultDTO resultDto) throws ValidatorException {
 		Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");
 		Matcher match = ptrn.matcher(mobileNumber);
 		if (!(match.find() && match.group().equals(mobileNumber))) {
 			log.error("wrong mobile number");
 			resultDto.setMobileNumberResult("wrong mobile number");
 		} else {
-			resultDto.setAadharResult(this.result);
+			resultDto.setMobileNumberResult(this.result);
 		}
 	}
 
-	private void valiodateIfscCode(String ifscCode, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validateIfscCode(String ifscCode, ValidateResultDTO resultDto) throws ValidatorException {
 		String regex = "^[A-Z]{4}0[A-Z0-9]{6}$";
 		Pattern ptrn = Pattern.compile(regex);
 		Matcher match = ptrn.matcher(ifscCode);
@@ -148,21 +153,21 @@ public class EmpDocumentValidation {
 			log.error("wrong IFSC code");
 			resultDto.setIfscCodeResult("wrong IFSC code");
 		} else {
-			resultDto.setAadharResult(this.result);
+			resultDto.setIfscCodeResult(this.result);
 		}
 
 	}
 
-	private void valiodateEmpName(String empName, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validateEmpName(String empName, ValidateResultDTO resultDto) throws ValidatorException {
 		if ("".equals(empName.trim()) && empName.isEmpty()) {
 			log.error("employee name is empty ");
 			resultDto.setEmpNameResult("employee name is empty");
 		} else {
-			resultDto.setAadharResult(this.result);
+			resultDto.setEmpNameResult(this.result);
 		}
 	}
 
-	private void valiodateAccountNo(long accountNo, ValidateResultDTO resultDto) {
+	private void validateAccountNo(long accountNo, ValidateResultDTO resultDto) {
 		if(accountNo >0 && accountNo <=16 ) {
 			resultDto.setAccountNoResult(this.result);
 		}else {
@@ -172,7 +177,7 @@ public class EmpDocumentValidation {
 
 	}
 
-	private void valiodateAadhar(long aadhar, ValidateResultDTO resultDto) throws ValidatorException {
+	private void validateAadhar(long aadhar, ValidateResultDTO resultDto) throws ValidatorException {
 		String number = String.valueOf(aadhar);
 		String regex = "^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$";
 		Pattern ptrn = Pattern.compile(regex);
