@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.employees.employees.dto.ValidateResultDTO;
 import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.EmployeeInformation;
 import com.employees.employees.repository.EmpInfoRepositry;
@@ -23,7 +24,12 @@ public class EmpDocumentValidationService {
 
 	@Autowired
 	EmpDocumentValidation validator;
-
+	
+	/**
+	 * this method used to get all none validation details
+	 * @return
+	 * @throws ValidatorException
+	 */
 	public List<EmployeeInformation> getAllEmployeesDetails() throws ValidatorException {
 		List<EmployeeInformation> list = null;
 		try {
@@ -68,5 +74,42 @@ public class EmpDocumentValidationService {
 		}
 		return list;
 	}
+	
+	public List<EmployeeInformation> verifiedUpdate() throws ValidatorException {
+		
+		List<EmployeeInformation> list = null;
+		try {
 
+			list = empinforepositry.findAll();
+			if (list.isEmpty()) {
+				log.error("no records fount in employees details");
+				throw new ValidatorException("no records fount in employees details");
+			} else {
+				validator.validateDocuments(list);
+			}
+		} catch (DataAccessException e) {
+			throw new ValidatorException(e.getMessage());
+		}
+		return list;
+		
+	}
+	
+	public List<ValidateResultDTO> getEmployeesDetails() throws ValidatorException {
+		List<EmployeeInformation> list = null;
+		List<ValidateResultDTO> result = null;
+		try {
+
+			list = empinforepositry.findAll();
+			if (list.isEmpty()) {
+				log.error("no records fount in employees details");
+				throw new ValidatorException("no records fount in employees details");
+			} else {
+				result = validator.validateDocuments( list);
+
+			}
+		} catch (DataAccessException e) {
+			throw new ValidatorException(e.getMessage());
+		}
+		return result;
+	}
 }
