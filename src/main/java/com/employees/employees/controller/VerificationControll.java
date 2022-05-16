@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.employees.employees.dto.MessageDTO;
 import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.EmployeeInformation;
-import com.employees.employees.service.empDocumentValidationService;
+import com.employees.employees.service.EmpDocumentValidationService;
 
 @RestController
 public class VerificationControll {
 	@Autowired
-	empDocumentValidationService service;
+	EmpDocumentValidationService service;
 
 	/**
 	 * this method used to get all verified status details
