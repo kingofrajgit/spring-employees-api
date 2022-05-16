@@ -37,6 +37,8 @@ public class EmployeeInformation {
 	private long accountNo;
 	@Column(name = "ifsc_code")
 	private String ifscCode;
+	@Column(name = "bank_name")
+	private String bankName;
 	@Column(name = "verification_status")
 	private String status;
 	@Column(name = "date_of_joining")
