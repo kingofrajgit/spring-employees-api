@@ -1,5 +1,6 @@
 package com.employees.employees.validation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,6 +8,7 @@ import java.util.regex.Pattern;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
+import com.employees.employees.dto.ValidateResultDTO;
 import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.EmployeeInformation;
 
@@ -16,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @Validated
 public class EmpDocumentValidation {
+
+	public String result = "sucess";
 
 	/**
 	 * this method using to validate inputs
@@ -30,12 +34,6 @@ public class EmpDocumentValidation {
 
 	}
 
-	/**
-	 * this method used ton validate verification status
-	 * 
-	 * @param status
-	 * @throws ValidatorException
-	 */
 	private void validateStatus(String status) throws ValidatorException {
 		if ("".equals(status.trim()) || status.isEmpty()) {
 			log.error("input status is empty ");
@@ -44,12 +42,6 @@ public class EmpDocumentValidation {
 
 	}
 
-	/**
-	 * this method used to validate id field
-	 * 
-	 * @param id
-	 * @throws ValidatorException
-	 */
 	private void valiodateId(Integer id) throws ValidatorException {
 		if (id <= 0) {
 			log.error("incomminig id is less the zero");
@@ -57,93 +49,139 @@ public class EmpDocumentValidation {
 		}
 	}
 
-	public void validateDocuments(List<EmployeeInformation> list) throws ValidatorException {
-
+	public List<ValidateResultDTO> validateDocuments(List<EmployeeInformation> list) throws ValidatorException {
+		List<ValidateResultDTO> listDto = new ArrayList<>();
+		ValidateResultDTO resultDto = null;
 		for (EmployeeInformation details : list) {
-			this.valiodateId(details.getEmpId());
-			this.validateStatus(details.getEmpEmail());
-			this.valiodateAadhar(details.getAadhar());
-			this.valiodateAccountNo(details.getAccountNo());
-			this.valiodateEmpName(details.getEmpName());
-			this.valiodateIfscCode(details.getIfscCode());
-			this.valiodateMobileNumber(details.getMobileNumber());
-			this.valiodatePannum(details.getPannum());
-			this.valiodateRole(details.getRole());
-
+			 resultDto = new ValidateResultDTO();
+			this.valiodateId(details.getEmpId(), resultDto);
+			this.validateEmpEmail(details.getEmpEmail(), resultDto);
+			this.valiodateAadhar(details.getAadhar(), resultDto);
+			this.valiodateAccountNo(details.getAccountNo(), resultDto);
+			this.valiodateEmpName(details.getEmpName(), resultDto);
+			this.valiodateIfscCode(details.getIfscCode(), resultDto);
+			this.valiodateMobileNumber(details.getMobileNumber(), resultDto);
+			this.valiodatePannum(details.getPannum(), resultDto);
+			System.out.println(details.getPannum());
+			this.valiodateRole(details.getRole(), resultDto);
+			listDto.add(resultDto);
 		}
+		return listDto;
 
 	}
 
-	private void valiodateRole(String role) throws ValidatorException {
-		if ("".equals(role.trim()) || role.isEmpty()) {
-			log.error("input status is empty");
-			throw new ValidatorException("input status is empty");
-		}
-
-	}
-	
 	/**
-	 * this method used to validate pan card number
-	 * @param pannum
+	 * this method used ton validate verification status
+	 * 
+	 * @param status
+	 * @param resultDto
 	 * @throws ValidatorException
 	 */
-	private void valiodatePannum(String pannum) throws ValidatorException {
-
-		String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
-		if (pannum == null) {
-			log.error("pannum is null");
-			throw new ValidatorException("pannum is null");
+	private void validateEmpEmail(String empEmail, ValidateResultDTO resultDto) throws ValidatorException {
+		if ("".equals(empEmail.trim()) || empEmail.isEmpty()) {
+			log.error("input status is empty ");
+			resultDto.setEmpEmailResult("input status is empty ");
 		}
-		if(pannum.matches(regex)) {
-			log.error("wrong pan number");
-			throw new ValidatorException("wrong pan number");
+
+	}
+
+	/**
+	 * this method used to validate id field
+	 * 
+	 * @param id
+	 * @param resultDto
+	 * @throws ValidatorException
+	 */
+	private void valiodateId(Integer id, ValidateResultDTO resultDto) throws ValidatorException {
+		if (id <= 0) {
+			log.error("incomminig id is less the zero");
+			throw new ValidatorException("id then can be less then zero");
 		}
 		
 	}
-	
-	
-	private void valiodateMobileNumber(String mobileNumber) throws ValidatorException {
-		Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");  
-		Matcher match = ptrn.matcher(mobileNumber);
-		if(!(match.find() && match.group().equals(mobileNumber))){
-			log.error("wrong mobile number");
-			throw new ValidatorException("wrong mobile number"); 
 
+	private void valiodateRole(String role, ValidateResultDTO resultDto) throws ValidatorException {
+		if ("".equals(role.trim()) || role.isEmpty()) {
+			log.error("input status is empty");
+			resultDto.setRoleResult("input status is empty");
+		} else {
+			resultDto.setAadharResult(this.result);
+		}
+
+	}
+
+	/**
+	 * this method used to validate pan card number
+	 * 
+	 * @param pannum
+	 * @param resultDto
+	 * @throws ValidatorException
+	 */
+	private void valiodatePannum(String pannum, ValidateResultDTO resultDto) throws ValidatorException {
+		System.out.println("enter");
+		String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
+		if (pannum.matches(regex)) {
+			log.error("wrong pan number");
+			resultDto.setPannumResult("wrong pan number");
+		} else {
+			resultDto.setPannumResult(this.result);
+		}
+
+	}
+
+	private void valiodateMobileNumber(String mobileNumber, ValidateResultDTO resultDto) throws ValidatorException {
+		Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");
+		Matcher match = ptrn.matcher(mobileNumber);
+		if (!(match.find() && match.group().equals(mobileNumber))) {
+			log.error("wrong mobile number");
+			resultDto.setMobileNumberResult("wrong mobile number");
+		} else {
+			resultDto.setAadharResult(this.result);
 		}
 	}
 
-	private void valiodateIfscCode(String ifscCode) throws ValidatorException {
+	private void valiodateIfscCode(String ifscCode, ValidateResultDTO resultDto) throws ValidatorException {
 		String regex = "^[A-Z]{4}0[A-Z0-9]{6}$";
 		Pattern ptrn = Pattern.compile(regex);
 		Matcher match = ptrn.matcher(ifscCode);
-		if(!(match.find() && match.group().equals(ifscCode))){
+		if (!(match.find() && match.group().equals(ifscCode))) {
 			log.error("wrong IFSC code");
-			throw new ValidatorException("wrong IFSC code"); 
-
+			resultDto.setIfscCodeResult("wrong IFSC code");
+		} else {
+			resultDto.setAadharResult(this.result);
 		}
 
 	}
 
-	private void valiodateEmpName(String empName) throws ValidatorException {
-		if("".equals(empName.trim()) && empName.isEmpty()) {
-			log.error("wrong IFSC code");
-			throw new ValidatorException("invalide employee nqame");
+	private void valiodateEmpName(String empName, ValidateResultDTO resultDto) throws ValidatorException {
+		if ("".equals(empName.trim()) && empName.isEmpty()) {
+			log.error("employee name is empty ");
+			resultDto.setEmpNameResult("employee name is empty");
+		} else {
+			resultDto.setAadharResult(this.result);
 		}
 	}
 
-	private void valiodateAccountNo(long accountNo) {
+	private void valiodateAccountNo(long accountNo, ValidateResultDTO resultDto) {
+		if(accountNo >0 && accountNo <=16 ) {
+			resultDto.setAccountNoResult(this.result);
+		}else {
+			resultDto.setAccountNoResult("wrong account number");
+		}
 		
 
 	}
 
-	private void valiodateAadhar(long aadhar) throws ValidatorException {
-		String number =String.valueOf(aadhar);
+	private void valiodateAadhar(long aadhar, ValidateResultDTO resultDto) throws ValidatorException {
+		String number = String.valueOf(aadhar);
 		String regex = "^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$";
-		Pattern ptrn = Pattern.compile(regex);  
+		Pattern ptrn = Pattern.compile(regex);
 		Matcher match = ptrn.matcher(number);
-		if(!(match.find() && match.group().equals(aadhar))){
+		if (!(match.find() && match.group().equals(number))) {
 			log.error("wrong Aadar number");
-			throw new ValidatorException("wrong Aadar number");
+			resultDto.setAadharResult("wrong Aadar number");
+		} else {
+			resultDto.setAadharResult(this.result);
 		}
 
 	}
