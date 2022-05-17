@@ -23,7 +23,6 @@ public class emplogService {
 	public Emplogin emplogin(String email, String password) throws Exception {
 		emplogValidation.logvalidation(email, password);
 		Emplogin user = null;
-		EmployeeInformation list = null;
 		
 		try {
 			user = emplogrepositry.findByempEmail(email);
