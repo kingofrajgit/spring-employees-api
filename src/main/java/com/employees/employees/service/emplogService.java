@@ -20,7 +20,7 @@ public class emplogService {
 	@Autowired
 	EmpInfoRepositry empinforepositry;
 
-	public EmployeeInformation emplogin(String email, String password) throws Exception {
+	public Emplogin emplogin(String email, String password) throws Exception {
 		emplogValidation.logvalidation(email, password);
 		Emplogin user = null;
 		EmployeeInformation list = null;
@@ -30,8 +30,7 @@ public class emplogService {
 			if (user == null) {
 				throw new Exception("Not a Registered Employee");
 			} else if (user.getEmpPassword().equals(password)) {
-				list =  empinforepositry.findByempEmail(email);
-				return list;
+				return user;
 			} else {
 				throw new Exception("Invalid credentials");
 			}
