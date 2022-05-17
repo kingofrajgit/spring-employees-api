@@ -11,29 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.employees.employees.model.EmployeeInformation;
 import com.employees.employees.repository.EmpInfoRepositry;
 
-
-
-
 @RestController
 public class EmpInfoController {
 
 	@Autowired
 	EmpInfoRepositry empinforepositry;
-	
+
 	@PostMapping("details/employeeinfo")
-	public EmployeeInformation Information(@RequestBody EmployeeInformation information)
-	{
-		
-		EmployeeInformation apply=empinforepositry.save(information);
-		System.out.println(apply.getJoiningdate());
-		System.out.println(apply);
-		return apply; 
-		
+	public EmployeeInformation Information(@RequestBody EmployeeInformation information) {
+
+		EmployeeInformation apply = empinforepositry.save(information);
+		return apply;
+
 	}
+
 	@GetMapping("employeeinformation/listemployee")
-	public List<EmployeeInformation> findAllEmployees()
-	{
-		List<EmployeeInformation> employeelist=empinforepositry.findAll();
-		return employeelist ;
+	public List<EmployeeInformation> findAllEmployees() {
+		List<EmployeeInformation> employeelist = empinforepositry.findAll();
+		return employeelist;
 	}
 }

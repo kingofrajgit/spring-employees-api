@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employees.employees.dto.MessageDTO;
+import com.employees.employees.dto.ValidateResultDTO;
 import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.EmployeeInformation;
-import com.employees.employees.service.empDocumentValidationService;
+import com.employees.employees.service.EmpDocumentValidationService;
 
 @RestController
 public class VerificationControll {
 	@Autowired
-	empDocumentValidationService service;
+	EmpDocumentValidationService service;
 
 	/**
 	 * this method used to get all verified status details
@@ -53,7 +54,14 @@ public class VerificationControll {
 			MessageDTO message = new MessageDTO(e.getMessage());
 			return new ResponseEntity<>(message, HttpStatus.OK);
 		}
-	}
+	} 
+	
+	/**
+	 * this method used  to get all verified status data
+	 * @param status
+	 * @return
+	 * @throws SQLException
+	 */
 
 	@GetMapping("employees/document/getAllDocumentsByVerifiedStaus")
 	public ResponseEntity<?> getAllDocumentsByVerifiedStaus(@RequestParam("status") String status) throws SQLException {
@@ -65,4 +73,20 @@ public class VerificationControll {
 			return new ResponseEntity<>(message, HttpStatus.OK);
 		}
 	}
+	
+	/**
+	 * this method used verify documents
+	 * @return
+	 */
+	@GetMapping("employees/document/verificationlist")
+	public ResponseEntity<?> Verifcation() {
+		try {
+			List<ValidateResultDTO> list = service.getEmployeesDetails();
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch (ValidatorException e) {
+			MessageDTO message = new MessageDTO(e.getMessage());
+			return new ResponseEntity<>(message, HttpStatus.OK);
+		}
+	}
+	
 }
