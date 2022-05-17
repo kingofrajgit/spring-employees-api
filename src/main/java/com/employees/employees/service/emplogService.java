@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.Emplogin;
+import com.employees.employees.model.EmployeeInformation;
+import com.employees.employees.repository.EmpInfoRepositry;
 import com.employees.employees.repository.EmplogRepositry;
 import com.employees.employees.validation.emplogValidation;
 
@@ -15,17 +17,21 @@ import com.employees.employees.validation.emplogValidation;
 public class emplogService {
 	@Autowired
 	EmplogRepositry emplogrepositry;
+	@Autowired
+	EmpInfoRepositry empinforepositry;
 
-	public Emplogin emplogin(String email, String password) throws Exception {
+	public EmployeeInformation emplogin(String email, String password) throws Exception {
 		emplogValidation.logvalidation(email, password);
 		Emplogin user = null;
+		EmployeeInformation list = null;
+		
 		try {
 			user = emplogrepositry.findByempEmail(email);
 			if (user == null) {
 				throw new Exception("Not a Registered Employee");
 			} else if (user.getEmpPassword().equals(password)) {
-				System.out.println(user.getEmpName() + " LoggedIn sucessfully");
-				return user;
+				list =  empinforepositry.findByempEmail(email);
+				return list;
 			} else {
 				throw new Exception("Invalid credentials");
 			}

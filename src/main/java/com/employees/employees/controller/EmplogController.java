@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.employees.employees.dto.MessageDTO;
 import com.employees.employees.exception.ValidatorException;
 import com.employees.employees.model.Emplogin;
-
+import com.employees.employees.model.EmployeeInformation;
 import com.employees.employees.repository.EmplogRepositry;
 import com.employees.employees.service.emplogService;
 
@@ -36,14 +36,13 @@ public class EmplogController {
 
 	@PostMapping("emplogin/login")
 	public ResponseEntity<?> emplog(@RequestBody Emplogin emplogin) {
-		Emplogin response = null;
+		EmployeeInformation response = null;
 		try {
 			response = emplogservice.emplogin(emplogin.getEmpEmail(), emplogin.getEmpPassword());
-			System.out.println(response);
-
+			
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
-
+			
 			MessageDTO message = new MessageDTO(e.getMessage());
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}

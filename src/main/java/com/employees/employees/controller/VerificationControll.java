@@ -32,7 +32,7 @@ public class VerificationControll {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (ValidatorException e) {
 			MessageDTO message = new MessageDTO(e.getMessage());
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class VerificationControll {
 			return new ResponseEntity<>(message.getMessage(), HttpStatus.OK);
 		} catch (ValidatorException e) {
 			MessageDTO message = new MessageDTO(e.getMessage());
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	} 
 	
@@ -70,7 +70,7 @@ public class VerificationControll {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			MessageDTO message = new MessageDTO(e.getMessage());
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -85,8 +85,30 @@ public class VerificationControll {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		} catch (ValidatorException e) {
 			MessageDTO message = new MessageDTO(e.getMessage());
-			return new ResponseEntity<>(message, HttpStatus.OK);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	/**
+	 * this method used to update verification status
+	 * 
+	 * @param id
+	 * @param status
+	 * @return
+	 * @throws ValidatorException 
+	 */
+	@GetMapping("employees/document/verificationUpdateall")
+	public ResponseEntity<?> autoMaticUpdate()  {
+		List<EmployeeInformation> list;
+		try {
+			list = service.autoMaticUpdate();
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch (ValidatorException e) {
+			
+			e.printStackTrace();
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}  
 	
 }

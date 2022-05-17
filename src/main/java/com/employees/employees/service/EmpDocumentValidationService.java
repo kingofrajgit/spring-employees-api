@@ -112,4 +112,26 @@ public class EmpDocumentValidationService {
 		}
 		return result;
 	}
+
+	public List<EmployeeInformation> autoMaticUpdate() throws ValidatorException {
+		List<EmployeeInformation> list = null;
+		
+		try {
+			
+			
+			list = empinforepositry.findAll();
+			list = validator.validateDocumentStatus( list);
+			System.out.println(list);
+			
+			for(EmployeeInformation data : list) {
+				
+				empinforepositry.docmentVrificationUpdate(data.getEmpId(), data.getStatus());
+				list = empinforepositry.findAll();
+			}
+			
+		} catch (DataAccessException e) {
+			throw new ValidatorException(e.getMessage());
+		}
+		return list;
+	}
 }

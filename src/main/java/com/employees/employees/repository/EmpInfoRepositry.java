@@ -23,4 +23,6 @@ public interface EmpInfoRepositry extends JpaRepository<EmployeeInformation, Int
 	@Query("select e from EmployeeInformation e where e.status=:status")
 	List<EmployeeInformation> findbyStatus(String status) throws SQLException;
 
+	EmployeeInformation findByempEmail(String email);
+
 }
