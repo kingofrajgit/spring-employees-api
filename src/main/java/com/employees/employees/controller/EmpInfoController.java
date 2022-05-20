@@ -21,8 +21,6 @@ public class EmpInfoController {
 	public EmployeeInformation Information(@RequestBody EmployeeInformation information) {
 
 		EmployeeInformation apply = empinforepositry.save(information);
-		System.out.println(apply.getJoiningdate());
-		System.out.println(apply);
 		return apply;
 
 	}
