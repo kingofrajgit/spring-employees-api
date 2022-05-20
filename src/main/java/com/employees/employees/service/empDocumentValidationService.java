@@ -38,9 +38,10 @@ public class empDocumentValidationService {
 			if (list.isEmpty()) {
 				log.error("no records fount in employees details");
 				throw new ValidatorException("no records fount in employees details");
-			} else {
-				validator.validateDocuments(list);
 			}
+//			} else {
+//				validator.validateDocuments(list);
+//			}
 		} catch (DataAccessException e) {
 			throw new ValidatorException(e.getMessage());
 		}
