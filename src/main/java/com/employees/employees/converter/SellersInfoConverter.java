@@ -1,12 +1,15 @@
 package com.employees.employees.converter;
 
+import org.springframework.context.annotation.Configuration;
+
 import com.employees.employees.dto.SellersInfoDTO;
 import com.employees.employees.model.Sellers;
 
+@Configuration
 public class SellersInfoConverter {
 	
 	/**
-	 * this method used to create converting purpose
+	 * this method used for converting purpose
 	 * @param sellersInfo
 	 * @return obj
 	 */
@@ -14,7 +17,6 @@ public class SellersInfoConverter {
 		SellersInfoDTO obj = new SellersInfoDTO();
 		obj.setSellersId(sellersInfo.getSellersId());
 		obj.setSellersName(sellersInfo.getSellersName());
-		obj.setAccountId(sellersInfo.getAccountId());
 		obj.setMobileNumber(sellersInfo.getMobileNumber());
 		obj.setGender(sellersInfo.getGender());
 		obj.setCategorie(sellersInfo.getCategorie());
@@ -34,7 +36,6 @@ public class SellersInfoConverter {
 		Sellers sellersInfo = new Sellers();
 		sellersInfo.setSellersId(obj.getSellersId());
 		sellersInfo.setSellersName(obj.getSellersName());
-		sellersInfo.setAccountId(obj.getAccountId());
 		sellersInfo.setMobileNumber(obj.getMobileNumber());
 		sellersInfo.setGender(obj.getGender());
 		sellersInfo.setCategorie(obj.getCategorie());
