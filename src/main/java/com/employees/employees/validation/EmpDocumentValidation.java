@@ -127,7 +127,6 @@ public class EmpDocumentValidation {
 	 */
 	private int validatePannum(String pannum, ValidateResultDTO resultDto) throws ValidatorException {
 		int n = 0;
-		System.out.println("enter");
 		String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
 		if (pannum.matches(regex)) {
 			log.error("wrong pan number");
@@ -157,6 +156,8 @@ public class EmpDocumentValidation {
 		String regex = "^[A-Z]{4}0[A-Z0-9]{6}$";
 		Pattern ptrn = Pattern.compile(regex);
 		Matcher match = ptrn.matcher(ifscCode);
+		System.out.println(!(match.find() && match.group().equals(ifscCode)));
+
 		if (!(match.find() && match.group().equals(ifscCode))) {
 			log.error("wrong IFSC code");
 			resultDto.setIfscCodeResult("wrong IFSC code");
@@ -179,8 +180,9 @@ public class EmpDocumentValidation {
 	}
 
 	private int validateAccountNo(long accountNo, ValidateResultDTO resultDto) {
+		int accNo = (int)(accountNo);
 		int n = 0;
-		if(accountNo >0 && accountNo <=16 ) {
+		if(accNo >0 && accNo <=16 ) {
 			resultDto.setAccountNoResult(this.result);
 		}else {
 			resultDto.setAccountNoResult("wrong account number");
@@ -196,6 +198,7 @@ public class EmpDocumentValidation {
 		String regex = "^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$";
 		Pattern ptrn = Pattern.compile(regex);
 		Matcher match = ptrn.matcher(number);
+		System.out.println(!(match.find() && match.group().equals(number)));
 		if (!(match.find() && match.group().equals(number))) {
 			log.error("wrong Aadar number");
 			resultDto.setAadharResult("wrong Aadar number");
